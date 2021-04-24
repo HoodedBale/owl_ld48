@@ -23,6 +23,9 @@ public class CreviceSpawner : MonoBehaviour
     System.Random m_rand;
     int m_randSeed;
 
+    public static float minimumY = 0;
+    public static float generationProgress = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -120,6 +123,8 @@ public class CreviceSpawner : MonoBehaviour
             {
                 currentRight -= rightDirection * layerOffset;
             }
+
+            generationProgress = (float)i / (float)layers;
         }
 
         tileId = tilePrefabs.Count - 1;
@@ -157,5 +162,7 @@ public class CreviceSpawner : MonoBehaviour
 
             currentY -= tileOffset.y;
         }
+
+        minimumY = currentY + tileOffset.y * 7;
     }
 }

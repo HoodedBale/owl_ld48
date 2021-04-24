@@ -16,9 +16,6 @@ public class MovementController : MonoBehaviour
     void Update()
     {
         Movement();
-        Vector3 camPos = Camera.main.transform.position;
-        camPos.y = transform.position.y;
-        Camera.main.transform.position = camPos;
     }
 
     void Movement()
