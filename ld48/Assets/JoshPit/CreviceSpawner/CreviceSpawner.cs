@@ -13,15 +13,18 @@ public class CreviceSpawner : MonoBehaviour
     public float minimumHole = 5;
     public float finalHoleSize = 2;
     public int alterChance = 30;
+    public int minimumObstacleDistance = 5;
     public List<int> layerLimit;
     public int generationThreshold;
 
     [Header("Prefabs")]
     public List<GameObject> tilePrefabs;
+    public List<GameObject> obstacles;
 
     List<GameObject> m_spawnedTiles;
     System.Random m_rand;
     int m_randSeed;
+    int m_currentObsDist;
 
     public static float minimumY = 0;
     public static float generationProgress = 0;
@@ -32,6 +35,7 @@ public class CreviceSpawner : MonoBehaviour
         m_spawnedTiles = new List<GameObject>();
         m_randSeed = new System.Random().Next();
         m_rand = new System.Random(m_randSeed);
+        m_currentObsDist = 0;
         StartCoroutine(DrawCrevice());
     }
 
@@ -73,7 +77,7 @@ public class CreviceSpawner : MonoBehaviour
                 }
             }
 
-            while(xLeft > (-Screen.width / 2) / 100.0f - 1)
+            while(xLeft > (-Screen.width / 2) / 100.0f - 3)
             {
                 GameObject temp = Instantiate(tilePrefabs[tileId]);
                 temp.transform.position = new Vector3(xLeft, currentY, z);
@@ -81,6 +85,12 @@ public class CreviceSpawner : MonoBehaviour
                 else temp.transform.localScale = new Vector3(1, 1, 1);
                 temp.transform.SetParent(transform);
                 if (!first && temp.GetComponent<EdgeCollider2D>() && i > 0) Destroy(temp.GetComponent<EdgeCollider2D>());
+                if(first && m_currentObsDist > minimumObstacleDistance && m_rand.Next(0, 2) > 0)
+                {
+                    GameObject obst = Instantiate(obstacles[m_rand.Next(0, obstacles.Count)]);
+                    obst.transform.position = temp.transform.position + new Vector3(0, 0, 1);
+                    m_currentObsDist = 0;
+                }
                 m_spawnedTiles.Add(temp);
 
                 temp = Instantiate(tilePrefabs[tileId]);
@@ -89,6 +99,13 @@ public class CreviceSpawner : MonoBehaviour
                 else temp.transform.localScale = new Vector3(-1, 1, 1);
                 temp.transform.SetParent(transform);
                 if (!first && temp.GetComponent<EdgeCollider2D>() && i > 0) Destroy(temp.GetComponent<EdgeCollider2D>());
+                if (first && m_currentObsDist > minimumObstacleDistance && m_rand.Next(0, 2) > 0)
+                {
+                    GameObject obst = Instantiate(obstacles[m_rand.Next(0, obstacles.Count)]);
+                    obst.transform.position = temp.transform.position + new Vector3(0, 0, 1);
+                    obst.transform.localScale = new Vector3(-1, 1, 1);
+                    m_currentObsDist = 0;
+                }
                 m_spawnedTiles.Add(temp);
 
                 xLeft -= tileOffset.x;
@@ -105,6 +122,7 @@ public class CreviceSpawner : MonoBehaviour
             }
 
             currentY -= tileOffset.y;
+            ++m_currentObsDist;
 
             if(m_rand.Next(0, 100) < alterChance || (transform.position.x - currentLeft < minimumHole / 2 && leftDirection > 0) || (currentLeft < -Screen.width / 2 + 1 && leftDirection < 0))
             {
@@ -124,7 +142,7 @@ public class CreviceSpawner : MonoBehaviour
                 currentRight -= rightDirection * layerOffset;
             }
 
-            generationProgress = (float)i / (float)layers;
+            generationProgress = (float)(i + 1) / (float)layers;
         }
 
         tileId = tilePrefabs.Count - 1;

@@ -10,9 +10,11 @@ public class CameraMovement : MonoBehaviour
         {
             GameObject josh = GameObject.Find("Josh");
             if (josh) return josh.transform.position.y;
-            else return 0;
+            else return transform.position.y;
         }
     }
+
+    public float slerpSpeed = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,7 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         Vector3 camPos = transform.position;
+        //camPos.y = camPos.y + (Josh - camPos.y) * Time.deltaTime * slerpSpeed;
         camPos.y = Josh;
         if (camPos.y < CreviceSpawner.minimumY) camPos.y = CreviceSpawner.minimumY;
         transform.position = camPos;

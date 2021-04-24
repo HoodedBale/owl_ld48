@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -3613936777124082236}
   m_Layer: 0
   m_Name: Stone_0
-  m_TagString: Untagged
+  m_TagString: Cliff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
