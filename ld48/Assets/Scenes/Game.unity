@@ -269,7 +269,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 30
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -293,7 +293,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -671,9 +671,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9634b77a49a962458312968952b010f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KickForce: {x: 350, y: 200}
+  KickForce: {x: 1000, y: 750}
   deathScreen: {fileID: 907914939}
-  josh: {fileID: 8662824876869275373, guid: 2813a21c65eaa6e43ae8df2e7d1dbb84, type: 3}
+  josh: {fileID: 4088209132608416806, guid: 2813a21c65eaa6e43ae8df2e7d1dbb84, type: 3}
 --- !u!4 &1531709979
 Transform:
   m_ObjectHideFlags: 0
@@ -1061,13 +1061,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d32a44cc330af45a4dbab5759c07f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layers: 500
+  layers: 100
   bottomLayers: 3
-  layerOffset: 0.05
-  tileOffset: {x: 1.8, y: 1, z: 0}
-  startingHoleSize: 10
-  minimumHole: 5
-  finalHoleSize: 4
+  layerOffset: 0.25
+  tileOffset: {x: 9, y: 5, z: 0}
+  startingHoleSize: 50
+  minimumHole: 25
+  finalHoleSize: 20
   alterChance: 30
   minimumObstacleDistance: 5
   layerLimit: 0100000014000000f4010000

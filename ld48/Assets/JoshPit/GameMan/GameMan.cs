@@ -86,7 +86,8 @@ public class GameMan : MonoBehaviour
 
     void KickStart()
     {
-        m_josh.GetComponent<Rigidbody2D>().AddForce(KickForce);
+        //m_josh.GetComponent<Rigidbody2D>().AddForce(KickForce);
+        m_josh.GetComponent<MovementController>().AddForce(KickForce);
     }
     void KickUpdate()
     {

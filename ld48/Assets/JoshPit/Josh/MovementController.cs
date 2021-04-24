@@ -22,6 +22,7 @@ public class MovementController : MonoBehaviour
     void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
+        //ResetRB();
     }
 
     // Update is called once per frame
@@ -60,10 +61,28 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    public void AddForce(Vector2 force)
+    {
+        if (!m_rb) m_rb = GetComponent<Rigidbody2D>();
+        m_rb.AddForce(force);
+    }
+
+    public void ResetRB()
+    {
+        for(int i = 0; i < transform.childCount; ++i)
+        {
+            if(transform.GetChild(i).gameObject.activeSelf)
+            {
+                m_rb = transform.GetChild(i).GetComponent<Rigidbody2D>();
+                break;
+            }
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Collider2D col = collision.collider;
-        if (col.tag == "Cliff")
+        if(col.tag == "Cliff")
         {
             inControl = false;
             m_recoverTimer = 2.0f;
@@ -76,7 +95,24 @@ public class MovementController : MonoBehaviour
             {
                 m_rb.AddForce(new Vector2(cliffKnockForceX, cliffKnockForceY));
             }
+        }
+    }
 
+    public void ReactCliff(Collider2D col)
+    {
+        if (!enabled) return;
+
+        Debug.Log("what");
+        inControl = false;
+        m_recoverTimer = 2.0f;
+
+        if (col.transform.position.x > transform.position.x)
+        {
+            m_rb.AddForce(new Vector2(-cliffKnockForceX, cliffKnockForceY));
+        }
+        else
+        {
+            m_rb.AddForce(new Vector2(cliffKnockForceX, cliffKnockForceY));
         }
     }
 
@@ -84,12 +120,21 @@ public class MovementController : MonoBehaviour
     {
         if (collision.tag == "Spike")
         {
-
             GameMan.gameMan.EndPhases();
             GameObject impaled = Instantiate(impaledJosh);
             impaled.transform.position = transform.position;
             gameObject.SetActive(false);
         }
+    }
+
+    public void ReactSpike(Collider2D collision)
+    {
+        if (!enabled) return;
+
+        GameMan.gameMan.EndPhases();
+        GameObject impaled = Instantiate(impaledJosh);
+        impaled.transform.position = transform.position;
+        gameObject.SetActive(false);
     }
 
 }

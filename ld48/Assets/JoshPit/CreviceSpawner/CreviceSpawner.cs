@@ -77,7 +77,7 @@ public class CreviceSpawner : MonoBehaviour
                 }
             }
 
-            while(xLeft > (-Screen.width / 2) / 100.0f - 3)
+            while(xLeft > (-Screen.width / 2) / 10.0f - 30)
             {
                 GameObject temp = Instantiate(tilePrefabs[tileId]);
                 temp.transform.position = new Vector3(xLeft, currentY, z);
