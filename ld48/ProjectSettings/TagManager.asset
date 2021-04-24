@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Cliff
   - Spike
+  - Flat
+  - Cushion
   layers:
   - Default
   - TransparentFX
