@@ -147,21 +147,22 @@ public class CreviceSpawner : MonoBehaviour
 
         tileId = tilePrefabs.Count - 1;
 
+        float middle = m_rand.Next(-5, 5);
         for (int i = 0; i < bottomLayers; ++i)
         {
             float xLeft = transform.position.x - finalHoleSize / 2;// + i * layerOffset;
             float xRight = transform.position.x + finalHoleSize / 2;// - i * layerOffset;
             float z = 0;
 
-            while (xLeft > (-Screen.width / 2) / 100.0f - 1)
+            while (xLeft > (-Screen.width / 2) / 10.0f - 30)
             {
                 GameObject temp = Instantiate(tilePrefabs[tileId]);
-                temp.transform.position = new Vector3(xLeft, currentY, z);
+                temp.transform.position = new Vector3(xLeft + middle, currentY, z);
                 temp.transform.SetParent(transform);
                 m_spawnedTiles.Add(temp);
 
                 temp = Instantiate(tilePrefabs[tileId]);
-                temp.transform.position = new Vector3(xRight, currentY, z);
+                temp.transform.position = new Vector3(xRight + middle, currentY, z);
                 temp.transform.localScale = new Vector3(-2, 1, 1);
                 temp.transform.SetParent(transform);
                 m_spawnedTiles.Add(temp);
@@ -181,6 +182,6 @@ public class CreviceSpawner : MonoBehaviour
             currentY -= tileOffset.y;
         }
 
-        minimumY = currentY + tileOffset.y * 7;
+        minimumY = currentY + tileOffset.y * 5;
     }
 }

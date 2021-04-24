@@ -19,18 +19,4 @@ public class JoshCollider : MonoBehaviour
         transform.parent.position = transform.position;
         transform.position = oldPos;
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.tag == "Cliff")
-            m_josh.ReactCliff(collision.collider);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Spike")
-        {
-            m_josh.ReactSpike(collision);
-        }
-    }
 }

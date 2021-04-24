@@ -7,13 +7,17 @@ public class GameMan : MonoBehaviour
     public delegate void Phase();
     public Vector2 KickForce;
     public GameObject deathScreen;
+    public GameObject winScreen;
     public GameObject josh;
+    public GameObject resetFade;
 
     Phase m_start, m_update, m_end;
     bool m_reset = true;
+    float m_timeElapsed;
 
     float m_timer;
     GameObject m_josh;
+    public static bool win = false;
 
     public static GameMan gameMan
     {
@@ -30,12 +34,16 @@ public class GameMan : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameStats.Reset();
+        m_timeElapsed = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         PhaseUpdate();
+        m_timeElapsed += Time.deltaTime;
+        GameStats.timeCompleted = m_timeElapsed;
     }
 
     void PhaseUpdate()
@@ -69,6 +77,15 @@ public class GameMan : MonoBehaviour
     {
         ChangePhase(DeathStart, DeathUpdate, DeathEnd);
     }
+
+    public void Clean()
+    {
+        resetFade.GetComponent<ResetFade>().StartFade();
+        deathScreen.SetActive(false);
+        deathScreen.GetComponent<SpringAppearance>().ResetUI();
+        ChangePhase(ResetStart, ResetUpdate, ResetEnd);
+    }
+
 
     void PrologueStart()
     {
@@ -105,11 +122,13 @@ public class GameMan : MonoBehaviour
     void GameStart()
     {
         m_josh.GetComponent<MovementController>().enabled = true;
-        Debug.Log("Start");
     }
     void GameUpdate()
     {
-
+        if(m_josh.transform.position.y < CreviceSpawner.minimumY - 10)
+        {
+            ChangePhase(WinStart, WinUpdate, WinEnd);
+        }
     }
     void GameEnd()
     {
@@ -119,6 +138,7 @@ public class GameMan : MonoBehaviour
     void DeathStart()
     {
         m_timer = 2.0f;
+        ++GameStats.deadBodies;
     }
     void DeathUpdate()
     {
@@ -129,6 +149,37 @@ public class GameMan : MonoBehaviour
         }
     }
     void DeathEnd()
+    {
+
+    }
+
+    void WinStart()
+    {
+        winScreen.SetActive(true);
+        GameStats.timeCompleted = Time.time - m_timeElapsed;
+        win = true;
+    }
+    void WinUpdate()
+    {
+
+    }
+    void WinEnd()
+    {
+
+    }
+
+    void ResetStart()
+    {
+
+    }
+    void ResetUpdate()
+    {
+        if(resetFade.GetComponent<ResetFade>().reset)
+        {
+            ResetPhases();
+        }
+    }
+    void ResetEnd()
     {
 
     }

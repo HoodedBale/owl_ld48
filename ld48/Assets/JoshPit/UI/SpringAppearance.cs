@@ -26,4 +26,9 @@ public class SpringAppearance : MonoBehaviour
         NumericSpring.Spring(ref scale.z, ref m_vel.z, endSize.z, Time.deltaTime, damp, speed * Mathf.PI);
         transform.localScale = scale;
     }
+
+    public void ResetUI()
+    {
+        transform.localScale = startSize;
+    }
 }

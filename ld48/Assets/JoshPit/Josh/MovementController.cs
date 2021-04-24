@@ -4,24 +4,45 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
+    public enum State
+    {
+        Z,
+        X,
+        C,
+        I,
+        IMPALED
+    }
+
     [Header("Physics")]
     public float speed = 10;
     public Vector2 moveForce;
     public float cliffKnockForceX = 40;
     public float cliffKnockForceY = 400;
     public float fallCap = 20;
+    public float fallCcap = 10;
+    public float fallZcap = 40;
     public bool inControl = true;
+    public float springDamp = 0.2f;
+    public float springSpeed = 16;
 
     [Header("Sprites")]
     public GameObject impaledJosh;
+    public GameObject facePlantJosh;
+
+    [Header("States")]
+    public State state;
+    public List<GameObject> poses;
 
     Rigidbody2D m_rb;
     float m_recoverTimer;
+    float m_fallCap;
 
     // Start is called before the first frame update
     void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
+        m_fallCap = fallCap;
+        SetState(State.C);
         //ResetRB();
     }
 
@@ -29,7 +50,10 @@ public class MovementController : MonoBehaviour
     void Update()
     {
         if(inControl)
+        {
+            StateControl();
             Movement();
+        }
         Recover();
     }
 
@@ -38,15 +62,33 @@ public class MovementController : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftArrow))
         {
             m_rb.AddForce(-moveForce);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         if(Input.GetKey(KeyCode.RightArrow))
         {
             m_rb.AddForce(moveForce);
+            transform.localScale = new Vector3(1, 1, 1);
         }
 
         Vector2 vel = m_rb.velocity;
-        if (vel.y < fallCap) vel.y = fallCap;
+        if (vel.y < m_fallCap) vel.y = m_fallCap;
+        if(state == State.IMPALED)
+        {
+            vel = Vector2.zero;
+        }    
         m_rb.velocity = vel;
+    }
+
+    void StateControl()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+            SetState(State.Z);
+        else if (Input.GetKeyDown(KeyCode.X))
+            SetState(State.X);
+        else if (Input.GetKeyDown(KeyCode.C))
+            SetState(State.C);
+        else if (Input.GetKeyDown(KeyCode.Space))
+            SetState(State.I);
     }
 
     void Recover()
@@ -67,52 +109,65 @@ public class MovementController : MonoBehaviour
         m_rb.AddForce(force);
     }
 
-    public void ResetRB()
+    public void SetState(State _state)
     {
-        for(int i = 0; i < transform.childCount; ++i)
+        state = _state;
+        foreach(GameObject pose in poses)
         {
-            if(transform.GetChild(i).gameObject.activeSelf)
-            {
-                m_rb = transform.GetChild(i).GetComponent<Rigidbody2D>();
+            pose.SetActive(false);
+        }
+        m_fallCap = fallCap;
+        poses[(int)state].SetActive(true);
+        GetComponent<BoxCollider2D>().size = new Vector2(5, 5);
+        switch(state)
+        {
+            case State.Z:
+                m_fallCap = fallZcap;
                 break;
-            }
+            case State.X:
+                break;
+            case State.C:
+                m_fallCap = fallCcap;
+                break;
+            case State.I:
+                GetComponent<BoxCollider2D>().size = new Vector2(2, 5);
+                break;
+            case State.IMPALED:
+                break;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Collider2D col = collision.collider;
-        if(col.tag == "Cliff")
+        if(col.tag == "Cliff" || (col.tag == "Cushion" && state != State.I))
         {
             inControl = false;
-            m_recoverTimer = 2.0f;
+            m_recoverTimer = 1.0f;
 
             if (col.transform.position.x > transform.position.x)
             {
                 m_rb.AddForce(new Vector2(-cliffKnockForceX, cliffKnockForceY));
+                transform.localScale = new Vector3(-1, 1, 1);
             }
             else
             {
                 m_rb.AddForce(new Vector2(cliffKnockForceX, cliffKnockForceY));
+                transform.localScale = new Vector3(1, 1, 1);
             }
+            StopCoroutine("Spring");
+            StartCoroutine("Spring");
+            SetState(State.C);
         }
-    }
-
-    public void ReactCliff(Collider2D col)
-    {
-        if (!enabled) return;
-
-        Debug.Log("what");
-        inControl = false;
-        m_recoverTimer = 2.0f;
-
-        if (col.transform.position.x > transform.position.x)
+        else if(col.tag == "Flat")
         {
-            m_rb.AddForce(new Vector2(-cliffKnockForceX, cliffKnockForceY));
-        }
-        else
-        {
-            m_rb.AddForce(new Vector2(cliffKnockForceX, cliffKnockForceY));
+            if (GameMan.win) return;
+
+            GameMan.gameMan.EndPhases();
+            GameObject flat = Instantiate(facePlantJosh);
+            flat.transform.position = transform.position;
+            flat.transform.localScale = transform.localScale;
+            gameObject.SetActive(false);
         }
     }
 
@@ -120,21 +175,47 @@ public class MovementController : MonoBehaviour
     {
         if (collision.tag == "Spike")
         {
+            if (transform.position.y < collision.transform.position.y) return;
+
             GameMan.gameMan.EndPhases();
             GameObject impaled = Instantiate(impaledJosh);
             impaled.transform.position = transform.position;
             gameObject.SetActive(false);
+
+            if (collision.transform.position.x < transform.position.x)
+            {
+                //impaled.transform.position -= new Vector3(2.5f, 2.5f, 0);
+                impaled.transform.position = collision.transform.position + new Vector3(2.5f, 2f, 0);
+                impaled.transform.localScale = new Vector3(1, 1, 1);
+            }
+            else
+            {
+                //impaled.transform.position -= new Vector3(2.5f, 2.5f, 0);
+                impaled.transform.position = collision.transform.position + new Vector3(-2.5f, 2f, 0);
+                impaled.transform.localScale = new Vector3(-1, 1, 1);
+            }
+
+            SetState(State.IMPALED);
         }
     }
 
-    public void ReactSpike(Collider2D collision)
+    IEnumerator Spring()
     {
-        if (!enabled) return;
+        Vector3 vel = new Vector3();
+        Vector3 scale = new Vector3(2, 1, 0);
+        Vector3 targetScale = transform.localScale;
+        float timer = 1.0f;
 
-        GameMan.gameMan.EndPhases();
-        GameObject impaled = Instantiate(impaledJosh);
-        impaled.transform.position = transform.position;
-        gameObject.SetActive(false);
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            NumericSpring.Spring(ref scale.x, ref vel.x, targetScale.x, Time.deltaTime, springDamp, springSpeed * Mathf.PI);
+            NumericSpring.Spring(ref scale.y, ref vel.y, targetScale.y, Time.deltaTime, springDamp, springSpeed * Mathf.PI);
+            transform.localScale = scale;
+            yield return null;
+        }
+
+        transform.localScale = targetScale;
     }
 
 }
