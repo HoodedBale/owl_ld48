@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class WinUI : MonoBehaviour
 {
     public Text message;
+    public ResetFade resetFade;
 
     // Start is called before the first frame update
     void Start()
@@ -21,18 +23,20 @@ public class WinUI : MonoBehaviour
 
     IEnumerator TabulateScore()
     {
-        yield return new WaitForSeconds(1.0f);
-
-        string timeScore = "Time:\t";
+        string timeScore = "Time:\t\t";
         string bodiesScore = "Bodies:\t";
-        string bonusScore = "Bonus:\t";
-        string totalScore = "Total:\t";
+        string bonusScore = "Bonus:\t\t";
+        string totalScore = "Total:\t\t";
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
 
         yield return new WaitForSeconds(1.0f);
 
-        int minute = (int)(GameStats.timeCompleted / 60.0f);
+        message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
+
+        yield return new WaitForSeconds(1.0f);
+
+        int minute = (int)(GameStats.timeCompleted / 60.0f) + 1;
         int score = GameStats.timeScores.ContainsKey(minute) ? GameStats.timeScores[minute] : GameStats.timeScores[-1];
         GameStats.totalScore += score;
         timeScore += score.ToString();
@@ -68,5 +72,22 @@ public class WinUI : MonoBehaviour
         message += bonus + "\n\n";
         message += total;
         return message;
+    }
+
+    public void Restart()
+    {
+        StartCoroutine(RestartFade());
+    }
+
+    IEnumerator RestartFade()
+    {
+        resetFade.StartFade();
+
+        while(!resetFade.reset)
+        {
+            yield return null;
+        }
+
+        SceneManager.LoadScene("Game");
     }
 }

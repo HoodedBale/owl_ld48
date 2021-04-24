@@ -169,6 +169,10 @@ public class MovementController : MonoBehaviour
             flat.transform.localScale = transform.localScale;
             gameObject.SetActive(false);
         }
+        else if(col.tag == "Cushion")
+        {
+            //Destroy(col.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

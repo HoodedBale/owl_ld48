@@ -42,8 +42,11 @@ public class GameMan : MonoBehaviour
     void Update()
     {
         PhaseUpdate();
-        m_timeElapsed += Time.deltaTime;
-        GameStats.timeCompleted = m_timeElapsed;
+        if(!win)
+        {
+            m_timeElapsed += Time.deltaTime;
+            GameStats.timeCompleted = m_timeElapsed;
+        }
     }
 
     void PhaseUpdate()
@@ -156,7 +159,7 @@ public class GameMan : MonoBehaviour
     void WinStart()
     {
         winScreen.SetActive(true);
-        GameStats.timeCompleted = Time.time - m_timeElapsed;
+        //GameStats.timeCompleted = Time.time - m_timeElapsed;
         win = true;
     }
     void WinUpdate()

@@ -124,18 +124,34 @@ public class CreviceSpawner : MonoBehaviour
             currentY -= tileOffset.y;
             ++m_currentObsDist;
 
-            if(m_rand.Next(0, 100) < alterChance || (transform.position.x - currentLeft < minimumHole / 2 && leftDirection > 0) || (currentLeft < -Screen.width / 2 + 1 && leftDirection < 0))
+            if(m_rand.Next(0, 100) < alterChance && ((currentLeft < -minimumHole / 2) || (currentLeft > -Screen.width / 2 + 1)))
             {
                 leftDirection *= -1;
+            }
+            else if(currentLeft > -minimumHole / 2 && leftDirection > 0)
+            {
+                leftDirection = -1;
+            }
+            else if(currentLeft < -Screen.width / 2 + 1 && leftDirection < 0)
+            {
+                leftDirection = 1;
             }
             else
             {
                 currentLeft -= leftDirection * layerOffset;
             }
 
-            if (m_rand.Next(0, 100) < alterChance || (transform.position.x - currentRight > -minimumHole / 2 && rightDirection < 0) || (currentRight > Screen.width / 2 + 1 && rightDirection > 0))
+            if (m_rand.Next(0, 100) < alterChance && ((currentRight > minimumHole / 2) || (currentRight < Screen.width / 2 + 1)))
             {
                 rightDirection *= -1;
+            }
+            else if(currentRight < minimumHole / 2 && rightDirection < 0)
+            {
+                rightDirection = 1;
+            }
+            else if (currentRight > Screen.width / 2 + 1 && rightDirection > 0)
+            {
+                rightDirection = 1;
             }
             else
             {

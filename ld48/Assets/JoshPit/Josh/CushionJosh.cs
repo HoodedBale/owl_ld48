@@ -25,6 +25,13 @@ public class CushionJosh : MonoBehaviour
         {
             StopAllCoroutines();
             StartCoroutine("Spring");
+
+            if(collision.collider.GetComponent<MovementController>().state == MovementController.State.I)
+            {
+                GetComponent<BoxCollider2D>().enabled = false;
+                GetComponent<Rigidbody2D>().AddForce(new Vector3(Random.Range(-1000, 1000), 1500, 0));
+                StartCoroutine("Die");
+            }
         }
     }
 
@@ -40,5 +47,29 @@ public class CushionJosh : MonoBehaviour
             transform.localScale = scale;
             yield return null;
         }
+    }
+
+    IEnumerator Die()
+    {
+        float timer = 1;
+
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            transform.eulerAngles += new Vector3(0, 0, 1) * 1000 * Time.deltaTime;
+            yield return null;
+        }
+
+        SpriteRenderer sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+        while(sr.color.a > 0)
+        {
+            sr.color -= new Color(0, 0, 0, 1) * 10 * Time.deltaTime;
+            transform.eulerAngles += new Vector3(0, 0, 1) * 1000 * Time.deltaTime;
+            yield return null;
+
+        }
+
+        Destroy(gameObject);
     }
 }

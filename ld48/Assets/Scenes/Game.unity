@@ -327,9 +327,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1531709978}
-        m_TargetAssemblyTypeName: GameMan, Assembly-CSharp
-        m_MethodName: Clean
+      - m_Target: {fileID: 1886936481}
+        m_TargetAssemblyTypeName: WinUI, Assembly-CSharp
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1549,6 +1549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: {fileID: 1356721505}
+  resetFade: {fileID: 1946916388}
 --- !u!114 &1886936482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1873,7 +1874,7 @@ MonoBehaviour:
   layers: 100
   bottomLayers: 3
   layerOffset: 0.25
-  tileOffset: {x: 9, y: 5, z: 0}
+  tileOffset: {x: 9.25, y: 5, z: 0}
   startingHoleSize: 40
   minimumHole: 30
   finalHoleSize: 15
