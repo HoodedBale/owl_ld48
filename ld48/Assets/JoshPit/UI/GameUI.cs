@@ -7,6 +7,7 @@ public class GameUI : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject options;
+    public GameObject credits;
     public ResetFade resetFade;
 
     // Start is called before the first frame update
@@ -40,13 +41,38 @@ public class GameUI : MonoBehaviour
 
     public void OpenOptions()
     {
+        StartCoroutine(OpenOptions2());
+    }
+
+    private IEnumerator OpenOptions2()
+    {
+        yield return new WaitForSeconds(0.5f);
         mainMenu.SetActive(false);
         options.SetActive(true);
     }
+
+    public void OpenCredits()
+    {
+        StartCoroutine(OpenCredits2());
+    }
+
+    private IEnumerator OpenCredits2()
+    {
+        yield return new WaitForSeconds(0.5f);
+        mainMenu.SetActive(false);
+        credits.SetActive(true);
+    }
+
     public void CloseOptions()
     {
         mainMenu.SetActive(true);
         options.SetActive(false);
+    }
+
+    public void CloseCredits()
+    {
+        mainMenu.SetActive(true);
+        credits.SetActive(false);
     }
 
     public void PointerHover()
