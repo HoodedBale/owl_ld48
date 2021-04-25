@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class WinUI : MonoBehaviour
 {
     public Text message;
+    public Text messageFront;
     public ResetFade resetFade;
 
     // Start is called before the first frame update
@@ -23,12 +24,13 @@ public class WinUI : MonoBehaviour
 
     IEnumerator TabulateScore()
     {
-        string timeScore = "Time:\t\t";
-        string bodiesScore = "Bodies:\t";
-        string bonusScore = "Bonus:\t\t";
-        string totalScore = "Total:\t\t";
+        string timeScore = "Time Bonus:\t";
+        string bodiesScore = "Bodies:\t\t";
+        string bonusScore = "Bonus:\t\t\t";
+        string totalScore = "Total:\t\t\t";
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
+        messageFront.text = message.text;
 
         yield return new WaitForSeconds(1.0f);
 
@@ -42,6 +44,7 @@ public class WinUI : MonoBehaviour
         timeScore += score.ToString();
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
+        messageFront.text = message.text;
 
         yield return new WaitForSeconds(1.0f);
 
@@ -50,6 +53,7 @@ public class WinUI : MonoBehaviour
         GameStats.totalScore += score;
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
+        messageFront.text = message.text;
 
         yield return new WaitForSeconds(1.0f);
 
@@ -57,12 +61,14 @@ public class WinUI : MonoBehaviour
         GameStats.totalScore += GameStats.bonusPoints;
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
+        messageFront.text = message.text;
 
         yield return new WaitForSeconds(1.0f);
 
         totalScore += GameStats.totalScore;
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
+        messageFront.text = message.text;
     }
 
     string BuildMessage(string time, string bodies, string bonus, string total)

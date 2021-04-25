@@ -1157,7 +1157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f9166d6263e04419a082fa4f7dabc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slerpSpeed: 10
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1546,7 +1545,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1889373564}
-  m_RootOrder: 1
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1653,7 +1652,7 @@ RectTransform:
   - {fileID: 1589082016}
   - {fileID: 1396668418}
   m_Father: {fileID: 1889373564}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1726,7 +1725,7 @@ GameObject:
   - component: {fileID: 911455089}
   - component: {fileID: 911455088}
   m_Layer: 5
-  m_Name: Josh
+  m_Name: JoshTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3640,7 +3639,7 @@ RectTransform:
   - {fileID: 1356721504}
   - {fileID: 1154121799}
   m_Father: {fileID: 1889373564}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3808,12 +3807,12 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 201433665}
-  - {fileID: 895628899}
   - {fileID: 907914940}
   - {fileID: 1886936480}
   - {fileID: 1946916384}
   - {fileID: 4579688115760053922}
   - {fileID: 107413509745009057}
+  - {fileID: 895628899}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3834,6 +3833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02bf2d059cab7d419dc483d4d4d0001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenu: {fileID: 4579688115760053921}
 --- !u!1 &1923635148
 GameObject:
   m_ObjectHideFlags: 0
@@ -4050,7 +4050,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1889373564}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4713,7 +4713,7 @@ Transform:
   - {fileID: 107413511115790920}
   - {fileID: 1134681109}
   m_Father: {fileID: 1889373564}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &107413509745009058
 GameObject:
@@ -6016,7 +6016,7 @@ RectTransform:
   - {fileID: 4579688116154259234}
   - {fileID: 315570958}
   m_Father: {fileID: 1889373564}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6345,7 +6345,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4579688116768129282}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1889373565}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4579688116768129282
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,7 +32,7 @@ public class StartupUI : MonoBehaviour
             m_fade.color -= new Color(0, 0, 0, 1) * fadeSpeed * Time.deltaTime;
             yield return null;
         }
-        GameMan.gameMan.ResetPhases();
+        //GameMan.gameMan.ResetPhases();
         Destroy(gameObject);
     }
 }

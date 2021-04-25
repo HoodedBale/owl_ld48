@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameUI : MonoBehaviour
 {
+    public GameObject mainMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,5 +18,10 @@ public class GameUI : MonoBehaviour
         
     }
 
+    public void StartGame()
+    {
+        GameMan.gameMan.ResetPhases();
+        mainMenu.SetActive(false);
+    }
 
 }

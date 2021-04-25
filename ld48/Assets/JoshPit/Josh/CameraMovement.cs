@@ -14,8 +14,6 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    public float slerpSpeed = 10;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +24,9 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         Vector3 camPos = transform.position;
-        //camPos.y = camPos.y + (Josh - camPos.y) * Time.deltaTime * slerpSpeed;
-        camPos.y = Josh;
+        GameObject josh = GameObject.Find("Josh");
+        if (josh) camPos.y = josh.transform.position.y;
+        //camPos.y = Josh;
         if (camPos.y < CreviceSpawner.minimumY) camPos.y = CreviceSpawner.minimumY;
         transform.position = camPos;
     }
