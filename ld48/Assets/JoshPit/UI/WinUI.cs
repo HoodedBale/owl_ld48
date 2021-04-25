@@ -69,6 +69,9 @@ public class WinUI : MonoBehaviour
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
         messageFront.text = message.text;
+
+        if (GameStats.totalScore > GameStats.highScore) GameStats.highScore = GameStats.totalScore;
+        if (GameStats.timeCompleted < GameStats.bestTime) GameStats.bestTime = GameStats.timeCompleted;
     }
 
     string BuildMessage(string time, string bodies, string bonus, string total)

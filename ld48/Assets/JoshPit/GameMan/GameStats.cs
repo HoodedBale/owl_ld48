@@ -8,6 +8,8 @@ public class GameStats
     public static float timeCompleted;
     public static int bonusPoints;
     public static int totalScore;
+    public static int highScore = 0;
+    public static float bestTime = Mathf.Infinity;
 
     public static Dictionary<int, int> timeScores;
     public static int bodyPenalty = -50;

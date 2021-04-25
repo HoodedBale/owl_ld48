@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7135115259987411583}
   - component: {fileID: 2011168448661006859}
   - component: {fileID: 7385998852651889912}
-  - component: {fileID: 6199312246213393463}
   m_Layer: 0
   m_Name: ImpaledJosh
   m_TagString: Cushion
@@ -126,27 +125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damp: 0.2
   speed: 16
---- !u!50 &6199312246213393463
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2311077631070607031}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &4833674988207361193
 GameObject:
   m_ObjectHideFlags: 0

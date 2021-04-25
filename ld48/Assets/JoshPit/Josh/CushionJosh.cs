@@ -29,6 +29,7 @@ public class CushionJosh : MonoBehaviour
             if(collision.collider.GetComponent<MovementController>().state == MovementController.State.I)
             {
                 GetComponent<BoxCollider2D>().enabled = false;
+                gameObject.AddComponent<Rigidbody2D>();
                 GetComponent<Rigidbody2D>().AddForce(new Vector3(Random.Range(-1000, 1000), 1500, 0));
                 StartCoroutine("Die");
             }

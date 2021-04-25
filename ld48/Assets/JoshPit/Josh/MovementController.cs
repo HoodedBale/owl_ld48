@@ -119,6 +119,7 @@ public class MovementController : MonoBehaviour
         m_fallCap = fallCap;
         poses[(int)state].SetActive(true);
         GetComponent<BoxCollider2D>().size = new Vector2(5, 5);
+        SFXMan.sfxMan.PlayShape((int)state);
         switch(state)
         {
             case State.Z:
@@ -158,6 +159,7 @@ public class MovementController : MonoBehaviour
             StopCoroutine("Spring");
             StartCoroutine("Spring");
             SetState(State.C);
+            SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.FLINCH);
         }
         else if(col.tag == "Flat")
         {
@@ -168,6 +170,7 @@ public class MovementController : MonoBehaviour
             flat.transform.position = transform.position;
             flat.transform.localScale = transform.localScale;
             gameObject.SetActive(false);
+            SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.DIE);
         }
         else if(col.tag == "Cushion")
         {
@@ -199,7 +202,16 @@ public class MovementController : MonoBehaviour
                 impaled.transform.localScale = new Vector3(-1, 1, 1);
             }
 
+            SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.DIE);
             SetState(State.IMPALED);
+        }
+        else if(collision.tag == "Bonus")
+        {
+            if(state == State.Z)
+            {
+                BonusMan.bonusMan.StartBonus();
+                Destroy(collision.gameObject);
+            }
         }
     }
 

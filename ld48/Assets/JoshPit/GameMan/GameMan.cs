@@ -10,6 +10,8 @@ public class GameMan : MonoBehaviour
     public GameObject winScreen;
     public GameObject josh;
     public GameObject resetFade;
+    public GameObject keg;
+    public int kegDistance = 250;
 
     Phase m_start, m_update, m_end;
     bool m_reset = true;
@@ -42,11 +44,6 @@ public class GameMan : MonoBehaviour
     void Update()
     {
         PhaseUpdate();
-        if(!win)
-        {
-            m_timeElapsed += Time.deltaTime;
-            GameStats.timeCompleted = m_timeElapsed;
-        }
     }
 
     void PhaseUpdate()
@@ -94,6 +91,13 @@ public class GameMan : MonoBehaviour
     {
         m_josh = Instantiate(josh);
         m_josh.name = "Josh";
+
+        for(int i = kegDistance; i < 750; i += kegDistance)
+        {
+            GameObject obj = Instantiate(keg);
+            obj.transform.position = Vector3.zero - new Vector3(0, i, 0);
+        }
+        GameStats.bonusPoints = 0;
     }
     void PrologueUpdate()
     {
@@ -128,9 +132,24 @@ public class GameMan : MonoBehaviour
     }
     void GameUpdate()
     {
-        if(m_josh.transform.position.y < CreviceSpawner.minimumY - 10)
+        if (!win)
         {
+            m_timeElapsed += Time.deltaTime;
+            GameStats.timeCompleted = m_timeElapsed;
+        }
+        if (m_josh.transform.position.y < CreviceSpawner.minimumY - 10)
+        {
+            SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.WIN);
             ChangePhase(WinStart, WinUpdate, WinEnd);
+        }
+
+        if (m_josh.transform.position.x < -30 ||
+            m_josh.transform.position.x > 30 ||
+            m_josh.transform.position.y > 50)
+        {
+            m_josh.SetActive(false);
+            SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.DIE);
+            EndPhases();
         }
     }
     void GameEnd()

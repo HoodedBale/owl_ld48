@@ -8,6 +8,7 @@ TagManager:
   - Spike
   - Flat
   - Cushion
+  - Bonus
   layers:
   - Default
   - TransparentFX
