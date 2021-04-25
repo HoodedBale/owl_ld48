@@ -12,7 +12,7 @@ public class GameUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -23,6 +23,12 @@ public class GameUI : MonoBehaviour
 
     public void StartGame()
     {
+        StartCoroutine(StartGame2());
+    }
+
+    private IEnumerator StartGame2()
+    {
+        yield return new WaitForSeconds(0.5f);
         GameMan.gameMan.ResetPhases();
         mainMenu.SetActive(false);
     }
