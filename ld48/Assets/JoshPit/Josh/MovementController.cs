@@ -213,6 +213,23 @@ public class MovementController : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
+        else if(collision.tag == "Cactus")
+        {
+            if(state == State.X)
+            {
+                collision.GetComponent<Cactus>().Kill();
+            }
+            else
+            {
+                GameMan.gameMan.EndPhases();
+                GameObject flat = Instantiate(facePlantJosh);
+                flat.transform.position = transform.position;
+                flat.transform.localScale = transform.localScale;
+                flat.GetComponent<CushionJosh>().Kill();
+                gameObject.SetActive(false);
+                SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.DIE);
+            }
+        }
     }
 
     IEnumerator Spring()

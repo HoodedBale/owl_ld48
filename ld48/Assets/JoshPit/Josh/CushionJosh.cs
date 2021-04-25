@@ -36,6 +36,14 @@ public class CushionJosh : MonoBehaviour
         }
     }
 
+    public void Kill()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+        gameObject.AddComponent<Rigidbody2D>();
+        GetComponent<Rigidbody2D>().AddForce(new Vector3(Random.Range(-1000, 1000), 1500, 0));
+        StartCoroutine("Die");
+    }
+
     IEnumerator Spring()
     {
         Vector3 vel = new Vector3();

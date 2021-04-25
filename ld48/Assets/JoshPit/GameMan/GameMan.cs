@@ -11,13 +11,19 @@ public class GameMan : MonoBehaviour
     public GameObject josh;
     public GameObject resetFade;
     public GameObject keg;
+    public GameObject cactus;
     public int kegDistance = 250;
+    public float cactusDelay = 10;
+
+    [Header("UI")]
+    public GameObject warning;
 
     Phase m_start, m_update, m_end;
     bool m_reset = true;
     float m_timeElapsed;
 
     float m_timer;
+    float m_cactusTimer = 0;
     GameObject m_josh;
     public static bool win = false;
 
@@ -151,6 +157,15 @@ public class GameMan : MonoBehaviour
             SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.DIE);
             EndPhases();
         }
+
+        if(m_cactusTimer > cactusDelay && Random.Range(0, 2) > 0)
+        {
+            StartCoroutine("ShootCactus");
+        }
+        else
+        {
+            m_cactusTimer += Time.deltaTime;
+        }
     }
     void GameEnd()
     {
@@ -203,6 +218,17 @@ public class GameMan : MonoBehaviour
     }
     void ResetEnd()
     {
+
+    }
+
+    IEnumerator ShootCactus()
+    {
+        m_cactusTimer = 0;
+        warning.SetActive(true);
+        yield return new WaitForSeconds(3.0f);
+        warning.SetActive(false);
+        GameObject cac = Instantiate(cactus);
+        cac.transform.position = Vector3.zero + new Vector3(0, 1, 0) * (m_josh.transform.position.y - 100);
 
     }
 }
