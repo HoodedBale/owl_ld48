@@ -32,6 +32,7 @@ public class MovementController : MonoBehaviour
     [Header("States")]
     public State state;
     public List<GameObject> poses;
+    public List<GameObject> poseVFX;
 
     Rigidbody2D m_rb;
     float m_recoverTimer;
@@ -118,12 +119,13 @@ public class MovementController : MonoBehaviour
         }
         m_fallCap = fallCap;
         poses[(int)state].SetActive(true);
+        if(gameObject.activeSelf)
+            StartCoroutine(ShapeParticles((int)state));
         GetComponent<BoxCollider2D>().size = new Vector2(5, 5);
         SFXMan.sfxMan.PlayShape((int)state);
         switch(state)
         {
             case State.Z:
-                m_fallCap = fallZcap;
                 break;
             case State.X:
                 break;
@@ -131,6 +133,7 @@ public class MovementController : MonoBehaviour
                 m_fallCap = fallCcap;
                 break;
             case State.I:
+                m_fallCap = fallZcap;
                 GetComponent<BoxCollider2D>().size = new Vector2(2, 5);
                 break;
             case State.IMPALED:
@@ -249,6 +252,14 @@ public class MovementController : MonoBehaviour
         }
 
         transform.localScale = targetScale;
+    }
+
+    IEnumerator ShapeParticles(int pose)
+    {
+        GameObject particle = Instantiate(poseVFX[pose]);
+        particle.transform.position = transform.position;
+        yield return new WaitForSeconds(1f);
+        Destroy(particle);
     }
 
 }

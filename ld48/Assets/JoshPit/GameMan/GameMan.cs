@@ -9,6 +9,7 @@ public class GameMan : MonoBehaviour
     public GameObject deathScreen;
     public GameObject winScreen;
     public GameObject josh;
+    public GameObject joshBoot;
     public GameObject resetFade;
     public GameObject keg;
     public GameObject cactus;
@@ -118,6 +119,7 @@ public class GameMan : MonoBehaviour
     {
         //m_josh.GetComponent<Rigidbody2D>().AddForce(KickForce);
         m_josh.GetComponent<MovementController>().AddForce(KickForce);
+        joshBoot.GetComponent<JoshBoot>().Kick(0);
     }
     void KickUpdate()
     {
@@ -225,6 +227,7 @@ public class GameMan : MonoBehaviour
     {
         m_cactusTimer = 0;
         warning.SetActive(true);
+        warning.GetComponent<ContinuousSpring>().StartSpring();
         yield return new WaitForSeconds(3.0f);
         warning.SetActive(false);
         GameObject cac = Instantiate(cactus);

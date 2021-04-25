@@ -12,13 +12,18 @@ public class ContinuousSpring : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine("Spring");
+        //StartCoroutine("Spring");
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void StartSpring()
+    {
+        StartCoroutine("Spring");
     }
 
     IEnumerator Spring()

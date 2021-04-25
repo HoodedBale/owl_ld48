@@ -20,6 +20,7 @@ public class CreviceSpawner : MonoBehaviour
     [Header("Prefabs")]
     public List<GameObject> tilePrefabs;
     public List<GameObject> obstacles;
+    public GameObject backPrefab;
 
     List<GameObject> m_spawnedTiles;
     System.Random m_rand;
@@ -75,6 +76,13 @@ public class CreviceSpawner : MonoBehaviour
                     tileId = j;
                     break;
                 }
+            }
+
+            if(i > 0)
+            {
+                GameObject back = Instantiate(backPrefab);
+                back.transform.position = Vector3.zero + new Vector3(0, 1, 0) * currentY + new Vector3(0, 0, 10);
+                back.transform.SetParent(transform);
             }
 
             while(xLeft > (-Screen.width / 2) / 10.0f - 30)
@@ -177,6 +185,10 @@ public class CreviceSpawner : MonoBehaviour
             float xLeft = transform.position.x - finalHoleSize / 2;// + i * layerOffset;
             float xRight = transform.position.x + finalHoleSize / 2;// - i * layerOffset;
             float z = 0;
+
+            GameObject back = Instantiate(backPrefab);
+            back.transform.SetParent(transform);
+            back.transform.position = Vector3.zero + new Vector3(0, 1, 0) * currentY + new Vector3(0, 0, 10);
 
             while (xLeft > (-Screen.width / 2) / 10.0f - 30)
             {

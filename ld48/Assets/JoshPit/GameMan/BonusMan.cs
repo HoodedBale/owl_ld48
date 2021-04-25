@@ -84,6 +84,7 @@ public class BonusMan : MonoBehaviour
             else
             {
                 m_currentIcons[i].GetComponent<Image>().color = Color.white;
+                m_currentIcons[i].GetComponent<BonusIcon>().StartSpring();
             }
             timer -= Time.deltaTime;
             yield return null;

@@ -25,7 +25,7 @@ public class WinUI : MonoBehaviour
     IEnumerator TabulateScore()
     {
         string timeScore = "Time Bonus:\t";
-        string bodiesScore = "Bodies:\t\t";
+        string bodiesScore = "Bodies:\t\t\t";
         string bonusScore = "Bonus:\t\t\t";
         string totalScore = "Total:\t\t\t";
 
@@ -45,6 +45,7 @@ public class WinUI : MonoBehaviour
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
         messageFront.text = message.text;
+        SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.CLICK);
 
         yield return new WaitForSeconds(1.0f);
 
@@ -54,6 +55,7 @@ public class WinUI : MonoBehaviour
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
         messageFront.text = message.text;
+        SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.CLICK);
 
         yield return new WaitForSeconds(1.0f);
 
@@ -62,6 +64,7 @@ public class WinUI : MonoBehaviour
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
         messageFront.text = message.text;
+        SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.CLICK);
 
         yield return new WaitForSeconds(1.0f);
 
@@ -69,6 +72,7 @@ public class WinUI : MonoBehaviour
 
         message.text = BuildMessage(timeScore, bodiesScore, bonusScore, totalScore);
         messageFront.text = message.text;
+        SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.CLICK);
 
         if (GameStats.totalScore > GameStats.highScore) GameStats.highScore = GameStats.totalScore;
         if (GameStats.timeCompleted < GameStats.bestTime) GameStats.bestTime = GameStats.timeCompleted;

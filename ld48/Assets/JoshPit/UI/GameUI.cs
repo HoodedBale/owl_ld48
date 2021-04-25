@@ -43,6 +43,16 @@ public class GameUI : MonoBehaviour
         options.SetActive(false);
     }
 
+    public void PointerHover()
+    {
+        SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.HOVER);
+    }
+
+    public void PointerClick()
+    {
+        SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.CLICK);
+    }
+
     IEnumerator RestartFade()
     {
         resetFade.StartFade();
