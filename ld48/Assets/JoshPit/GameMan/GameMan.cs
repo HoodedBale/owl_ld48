@@ -123,6 +123,7 @@ public class GameMan : MonoBehaviour
         //m_josh.GetComponent<Rigidbody2D>().AddForce(KickForce);
         m_josh.GetComponent<MovementController>().AddForce(KickForce);
         joshBoot.GetComponent<JoshBoot>().Kick(0);
+        SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.KICK);
     }
     void KickUpdate()
     {

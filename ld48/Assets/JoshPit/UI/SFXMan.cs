@@ -19,7 +19,8 @@ public class SFXMan : MonoBehaviour
         WIN,
         DIE,
         HOVER,
-        CLICK
+        CLICK,
+        KICK
     }
 
     public List<AudioClip> shapeClip;

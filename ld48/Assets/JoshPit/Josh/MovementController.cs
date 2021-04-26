@@ -171,7 +171,7 @@ public class MovementController : MonoBehaviour
 
             GameMan.gameMan.EndPhases();
             GameObject flat = Instantiate(facePlantJosh);
-            flat.transform.position = transform.position;
+            flat.transform.position = transform.position + new Vector3(0, 0, -2);
             flat.transform.localScale = transform.localScale;
             gameObject.SetActive(false);
             SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.DIE);
@@ -191,19 +191,19 @@ public class MovementController : MonoBehaviour
 
             GameMan.gameMan.EndPhases();
             GameObject impaled = Instantiate(impaledJosh);
-            impaled.transform.position = transform.position;
+            impaled.transform.position = transform.position + new Vector3(0, 0, -2);
             gameObject.SetActive(false);
 
             if (collision.transform.position.x < transform.position.x)
             {
                 //impaled.transform.position -= new Vector3(2.5f, 2.5f, 0);
-                impaled.transform.position = collision.transform.position + new Vector3(2.5f, 2f, 0);
+                impaled.transform.position = collision.transform.position + new Vector3(2.5f, 2f, 0) + new Vector3(0, 0, -2);
                 impaled.transform.localScale = new Vector3(1, 1, 1);
             }
             else
             {
                 //impaled.transform.position -= new Vector3(2.5f, 2.5f, 0);
-                impaled.transform.position = collision.transform.position + new Vector3(-2.5f, 2f, 0);
+                impaled.transform.position = collision.transform.position + new Vector3(-2.5f, 2f, 0) + new Vector3(0, 0, -2);
                 impaled.transform.localScale = new Vector3(-1, 1, 1);
             }
 

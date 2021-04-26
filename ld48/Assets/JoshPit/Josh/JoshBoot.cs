@@ -27,19 +27,19 @@ public class JoshBoot : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        while(transform.eulerAngles.z < 90 && transform.eulerAngles.z >= 0)
+        while(transform.eulerAngles.z < 90 && transform.eulerAngles.z >= -40)
         {
             transform.eulerAngles += new Vector3(0, 0, kickSpeed * Time.deltaTime);
             yield return null;
         }
         transform.eulerAngles = new Vector3(0, 0, 90);
 
-        while(transform.eulerAngles.z > 0 && transform.eulerAngles.z <= 90)
+        while(transform.eulerAngles.z > -40 && transform.eulerAngles.z <= 90)
         {
             transform.eulerAngles -= new Vector3(0, 0, kickSpeed * Time.deltaTime);
             yield return null;
         }
 
-        transform.eulerAngles = Vector3.zero;
+        transform.eulerAngles = Vector3.zero - new Vector3(0,0,40);
     }
 }
