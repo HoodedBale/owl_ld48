@@ -34,9 +34,12 @@ public class BonusMan : MonoBehaviour
         if (m_active)
         {
             GameObject josh = GameObject.Find("Josh");
-            Vector2 vel = josh.GetComponent<Rigidbody2D>().velocity;
-            if (vel.y < -1) vel.y = -1;
-            josh.GetComponent<Rigidbody2D>().velocity = vel;
+            if(josh)
+            {
+                Vector2 vel = josh.GetComponent<Rigidbody2D>().velocity;
+                if (vel.y < -1) vel.y = -1;
+                josh.GetComponent<Rigidbody2D>().velocity = vel;
+            }
         }
     }
 

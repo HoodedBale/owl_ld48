@@ -32,6 +32,7 @@ public class GameUI : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         GameMan.gameMan.ResetPhases();
         mainMenu.SetActive(false);
+        MusicMan.musicMan.PlayGameMusic();
     }
 
     public void Restart()

@@ -18,6 +18,7 @@ public class GameMan : MonoBehaviour
 
     [Header("UI")]
     public GameObject warning;
+    public GameObject nearBottom;
 
     Phase m_start, m_update, m_end;
     bool m_reset = true;
@@ -106,6 +107,7 @@ public class GameMan : MonoBehaviour
             obj.transform.position = Vector3.zero - new Vector3(0, i, 0);
         }
         GameStats.bonusPoints = 0;
+        nearBottom.SetActive(false);
     }
     void PrologueUpdate()
     {
@@ -152,6 +154,12 @@ public class GameMan : MonoBehaviour
             ChangePhase(WinStart, WinUpdate, WinEnd);
         }
 
+        if(m_josh.transform.position.y < CreviceSpawner.minimumY + 150)
+        {
+            nearBottom.SetActive(true);
+        }
+
+
         if (m_josh.transform.position.x < -30 ||
             m_josh.transform.position.x > 30 ||
             m_josh.transform.position.y > 50)
@@ -172,7 +180,7 @@ public class GameMan : MonoBehaviour
     }
     void GameEnd()
     {
-
+        nearBottom.SetActive(false);
     }
 
     void DeathStart()

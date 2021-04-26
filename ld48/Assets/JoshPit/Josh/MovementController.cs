@@ -220,7 +220,8 @@ public class MovementController : MonoBehaviour
         }
         else if(collision.tag == "Cactus")
         {
-            if(state == State.X)
+            if (GameMan.win) return;
+            if (state == State.X)
             {
                 collision.GetComponent<Cactus>().Kill();
                 SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.AWESOME);
