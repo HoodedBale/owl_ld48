@@ -44,6 +44,7 @@ public class GameMan : MonoBehaviour
     void Start()
     {
         GameStats.Reset();
+        win = false;
         m_timeElapsed = 0;
     }
 

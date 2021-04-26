@@ -66,7 +66,9 @@ public class CreviceSpawner : MonoBehaviour
             float xLeft = currentLeft;
             float xRight = currentRight;
             float z = 0;
-            bool first = true;
+            //bool first = true;
+            bool leftFirst = true;
+            bool rightFirst = true;
 
             tileId = 0;
             for(int j = 0; j < layerLimit.Count; ++j)
@@ -95,13 +97,14 @@ public class CreviceSpawner : MonoBehaviour
                     if (leftDirection > 0) temp.transform.localScale = new Vector3(1, -1, 1);
                     else temp.transform.localScale = new Vector3(1, 1, 1);
                     temp.transform.SetParent(transform);
-                    if (!first && temp.GetComponent<EdgeCollider2D>() && i > 0) Destroy(temp.GetComponent<EdgeCollider2D>());
-                    if (first && m_currentObsDist > minimumObstacleDistance && m_rand.Next(0, 2) > 0)
+                    if (!leftFirst && temp.GetComponent<EdgeCollider2D>() && i > 0) Destroy(temp.GetComponent<EdgeCollider2D>());
+                    if (leftFirst && m_currentObsDist > minimumObstacleDistance && m_rand.Next(0, 2) > 0)
                     {
                         GameObject obst = Instantiate(obstacles[m_rand.Next(0, obstacles.Count)]);
                         obst.transform.position = temp.transform.position + new Vector3(0, 0, 1);
                         m_currentObsDist = 0;
                     }
+                    leftFirst = false;
                     m_spawnedTiles.Add(temp);
                 }
 
@@ -112,14 +115,15 @@ public class CreviceSpawner : MonoBehaviour
                     if (rightDirection < 0) temp.transform.localScale = new Vector3(-1, -1, 1);
                     else temp.transform.localScale = new Vector3(-1, 1, 1);
                     temp.transform.SetParent(transform);
-                    if (!first && temp.GetComponent<EdgeCollider2D>() && i > 0) Destroy(temp.GetComponent<EdgeCollider2D>());
-                    if (first && m_currentObsDist > minimumObstacleDistance && m_rand.Next(0, 2) > 0)
+                    if (!rightFirst && temp.GetComponent<EdgeCollider2D>() && i > 0) Destroy(temp.GetComponent<EdgeCollider2D>());
+                    if (rightFirst && m_currentObsDist > minimumObstacleDistance && m_rand.Next(0, 2) > 0)
                     {
                         GameObject obst = Instantiate(obstacles[m_rand.Next(0, obstacles.Count)]);
                         obst.transform.position = temp.transform.position + new Vector3(0, 0, 1);
                         obst.transform.localScale = new Vector3(-1, 1, 1);
                         m_currentObsDist = 0;
                     }
+                    rightFirst = false;
                     m_spawnedTiles.Add(temp);
                 }
 
@@ -133,7 +137,7 @@ public class CreviceSpawner : MonoBehaviour
                     threshold = 0;
                     yield return null;
                 }
-                first = false;
+                //first = false;
             }
 
             currentY -= tileOffset.y;
@@ -190,32 +194,46 @@ public class CreviceSpawner : MonoBehaviour
             back.transform.SetParent(transform);
             back.transform.position = Vector3.zero + new Vector3(0, 1, 0) * currentY + new Vector3(0, 0, 10);
 
-            while (xLeft > (-Screen.width / 2) / 10.0f - 30)
+            if(firstFloor)
             {
                 GameObject temp = Instantiate(tilePrefabs[tileId]);
-                temp.transform.position = new Vector3(xLeft + middle, currentY, z);
+                temp.transform.position = new Vector3(xLeft + middle, currentY, z) + new Vector3(0, 1, 0) * tileOffset.y / 2;
                 temp.transform.SetParent(transform);
-                if (!firstFloor) temp.tag = "Untagged";
                 m_spawnedTiles.Add(temp);
 
                 temp = Instantiate(tilePrefabs[tileId]);
-                temp.transform.position = new Vector3(xRight + middle, currentY, z);
-                temp.transform.localScale = new Vector3(-2, 1, 1);
+                temp.transform.position = new Vector3(xRight + middle, currentY, z) + new Vector3(0,1,0) * tileOffset.y / 2;
+                temp.transform.localScale = new Vector3(-3, 3, 1);
                 temp.transform.SetParent(transform);
-                if (!firstFloor) temp.tag = "Untagged";
                 m_spawnedTiles.Add(temp);
-
-                xLeft -= tileOffset.x;
-                xRight += tileOffset.x;
-                z += 0.1f;
-
-                ++threshold;
-                if (threshold >= generationThreshold)
-                {
-                    threshold = 0;
-                    yield return null;
-                }
             }
+
+            //while (xLeft > (-Screen.width / 2) / 10.0f - 30)
+            //{
+            //    GameObject temp = Instantiate(tilePrefabs[tileId]);
+            //    temp.transform.position = new Vector3(xLeft + middle, currentY, z);
+            //    temp.transform.SetParent(transform);
+            //    if (!firstFloor) temp.tag = "Untagged";
+            //    m_spawnedTiles.Add(temp);
+
+            //    temp = Instantiate(tilePrefabs[tileId]);
+            //    temp.transform.position = new Vector3(xRight + middle, currentY, z);
+            //    temp.transform.localScale = new Vector3(-2, 1, 1);
+            //    temp.transform.SetParent(transform);
+            //    if (!firstFloor) temp.tag = "Untagged";
+            //    m_spawnedTiles.Add(temp);
+
+            //    xLeft -= tileOffset.x;
+            //    xRight += tileOffset.x;
+            //    z += 0.1f;
+
+            //    ++threshold;
+            //    if (threshold >= generationThreshold)
+            //    {
+            //        threshold = 0;
+            //        yield return null;
+            //    }
+            //}
 
             currentY -= tileOffset.y;
             firstFloor = false;

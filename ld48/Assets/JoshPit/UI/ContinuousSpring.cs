@@ -23,6 +23,7 @@ public class ContinuousSpring : MonoBehaviour
 
     public void StartSpring()
     {
+        transform.localScale = new Vector3(1, 1, 1);
         StartCoroutine("Spring");
     }
 

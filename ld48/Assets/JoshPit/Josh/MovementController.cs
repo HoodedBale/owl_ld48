@@ -167,6 +167,7 @@ public class MovementController : MonoBehaviour
         else if(col.tag == "Flat")
         {
             if (GameMan.win) return;
+            if (transform.position.y < col.transform.parent.position.y) return;
 
             GameMan.gameMan.EndPhases();
             GameObject flat = Instantiate(facePlantJosh);
@@ -186,6 +187,7 @@ public class MovementController : MonoBehaviour
         if (collision.tag == "Spike")
         {
             if (transform.position.y < collision.transform.position.y) return;
+            if (GameMan.win) return;
 
             GameMan.gameMan.EndPhases();
             GameObject impaled = Instantiate(impaledJosh);
@@ -221,6 +223,9 @@ public class MovementController : MonoBehaviour
             if(state == State.X)
             {
                 collision.GetComponent<Cactus>().Kill();
+                SFXMan.sfxMan.PlayFeedback(SFXMan.Feedback.AWESOME);
+                GameStats.bonusPoints += 250;
+                StartCoroutine(ShapeParticles(1));
             }
             else
             {
